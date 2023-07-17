@@ -1,0 +1,43 @@
+NUSHU Passive Covert Channel in TCP ISN numbers
+proof-of-concept covert channel engine for Linux 2.4 kernels
+
+WARNING: This program has been written in order to present possible dangerous
+from covert channels in the corporate networks and to allow some researches on
+statistical analysis of such channels. It should be considered as a
+proof-of-concept only. Be aware that this program was not tested extensively and
+it is quite possible that it will crash your machine, so don't use it on a
+production system! Use at your own risk!
+
+I welcome any constructive feedback and/or patches;) But, please don't send me
+emails that you cannot compile it or it just have crashed your system and you
+want the new version. I really have not time for supporting this stuff:(
+
+more info: http://invisiblethings.org/papers/passive-covert-channels-linux.pdf
+
+nushu_sender.o takes the following parameters:
+	dev=<device> where device could be something like eth0, ppp0, etc...
+	cipher=[0|1] 0 for no cipher and 1 for DES
+	key="string" make sure to use the same on the receiver (needed only if cipher is not 0)
+	exclude_ip=<172.16.*.*> specify IP numbers for which there will be no secret messages sent
+		i.e. the ISN in packets detonated to those IP will not be altered by NUSHU (optional)
+
+
+nushu_hider.o is fully automatic and takes no arguments! It is responsible for cheating local
+	PF_PACKET sniffers (like tcpdump), so they not detect covert channel (see paper for details)
+
+nushu_receiver.o takes the following parameters:
+	dev=<device> where device could be something like eth0, ppp0, etc...
+	cipher=[0|1] 0 for no cipher and 1 for DES
+	key="string" make sure to use the same on the receiver (needed only if cipher if not 0)
+	src_ip=<ip_where_nushu_sender_is_placed>
+
+
+Happy New Year!
+
+Joanna Rutkowska
+December 2004, 21th Chaos Communication Congress
+joanna at invisiblethings.org
+
+
+
+
